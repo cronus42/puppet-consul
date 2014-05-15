@@ -14,15 +14,10 @@ CONSUL=<%= scope.lookupvar('consul::bin_dir') -%>/consul
 CONFIG=<%= scope.lookupvar('consul::config_dir') -%>
 
 
-. /lib/init/vars.sh
-. /lib/lsb/init-functions
-
 do_start() {
 	if [ -x $CONSUL ]; then
-	  log_begin_msg "Starting consul"
 		$CONSUL agent -config-dir $CONFIG
 		ES=$?
-		log_end_msg $ES
 		return $ES
 	fi
 }
