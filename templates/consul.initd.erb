@@ -8,15 +8,19 @@
 # Short-Description: start consul
 ### END INIT INFO
 
+# Source function library.
+. /etc/init.d/functions
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 CONSUL=<%= scope.lookupvar('consul::bin_dir') -%>/consul
 CONFIG=<%= scope.lookupvar('consul::config_dir') -%>
+CONSUL_LOG=/var/log/consul.log
 
 
 do_start() {
 	if [ -x $CONSUL ]; then
-		$CONSUL agent -config-dir $CONFIG
+  echo -n $"Starting consul: "
+    daemon --check consul nohup $CONSUL agent -config-dir $CONFIG < /dev/null > $CONSUL_LOG &
 		ES=$?
 		return $ES
 	fi
@@ -24,13 +28,14 @@ do_start() {
 
 case "$1" in
     start)
-	do_start
+        do_start
         ;;
     restart|reload|force-reload)
         echo "Error: argument '$1' not supported" >&2
         exit 3
         ;;
     stop)
+        killproc consul
         ;;
     *)
         echo "Usage: $0 start|stop" >&2
