@@ -45,11 +45,10 @@ class consul::install {
         content => template('consul/consul.upstart.erb'),
       }
     }
-
-    if $consul::manage_user {
-    user { $consul::user:
-      ensure => 'present',
-    }
   }
-
+    if $consul::manage_user {
+      user { $consul::user:
+        ensure => 'present',
+      }
+    }
 }
