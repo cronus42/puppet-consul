@@ -31,7 +31,7 @@ class consul::install {
   case $::osfamily {
     'redhat': {
       file { '/etc/init.d/consul':
-        mode   => '0444',
+        mode   => '0755',
         owner   => 'root',
         group   => 'root',
         content => template('consul/consul.initd.erb'),
