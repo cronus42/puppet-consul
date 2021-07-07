@@ -16,7 +16,7 @@ group :development do
 #  gem "travis"
 #  gem "travis-lint"
   gem 'beaker', '~> 1.11.0'
-  gem 'beaker-rspec'
+  gem 'beaker-rspec', '>= 2.2.4'
 #  gem "puppet-blacksmith"
   gem "guard-rake"
 end
